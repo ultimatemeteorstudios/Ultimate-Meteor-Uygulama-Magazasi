@@ -1,1 +1,0 @@
-# Ultimate-Meteor-Uygulama-Magazasi
