@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Ultimate Meteor APK Koleksiyonu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Highlight ve Seçme Engelleme */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Fredoka', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
@@ -22,10 +25,100 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a2a, #1a1a40);
+            background: #05050f;
             color: #fff;
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Uzay arka planı: nebula katmanları + yıldız tarlaları */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 15%, rgba(120, 60, 200, 0.35), transparent 60%),
+                radial-gradient(ellipse 70% 60% at 85% 20%, rgba(0, 120, 255, 0.28), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 50% 90%, rgba(255, 80, 120, 0.18), transparent 60%),
+                linear-gradient(160deg, #050514 0%, #0a0a24 45%, #120a2e 100%);
+        }
+
+        .stars-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            z-index: -2;
+            background-repeat: repeat;
+            opacity: 0.9;
+        }
+
+        .stars-small {
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+                radial-gradient(1px 1px at 90px 120px, #fff, transparent),
+                radial-gradient(1px 1px at 160px 60px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 220px 200px, #fff, transparent),
+                radial-gradient(1px 1px at 300px 90px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 40px 180px, #fff, transparent),
+                radial-gradient(1px 1px at 260px 20px, rgba(255,255,255,0.6), transparent);
+            background-size: 340px 240px;
+            animation: driftStars 140s linear infinite;
+        }
+
+        .stars-big {
+            background-image:
+                radial-gradient(1.5px 1.5px at 60px 80px, #a8d9ff, transparent),
+                radial-gradient(2px 2px at 200px 150px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 320px 40px, #ffd7ff, transparent),
+                radial-gradient(2px 2px at 380px 220px, #fff, transparent);
+            background-size: 420px 300px;
+            animation: driftStars 220s linear infinite reverse;
+        }
+
+        @keyframes driftStars {
+            from { transform: translate(0, 0); }
+            to { transform: translate(-340px, -240px); }
+        }
+
+        .shooting-star {
+            position: fixed;
+            top: -10%;
+            left: 110%;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255,255,255,0.8);
+            z-index: -1;
+            animation: shootAcross 7s linear infinite;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 140px;
+            height: 1px;
+            background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+            transform: translateY(-50%);
+        }
+
+        .shooting-star:nth-child(2) { top: 15%; animation-delay: 2.3s; animation-duration: 9s; }
+        .shooting-star:nth-child(3) { top: 55%; animation-delay: 4.6s; animation-duration: 6s; }
+
+        @keyframes shootAcross {
+            0% { transform: translate(0, 0); opacity: 0; }
+            5% { opacity: 1; }
+            30% { transform: translate(-1400px, 700px); opacity: 0; }
+            100% { transform: translate(-1400px, 700px); opacity: 0; }
         }
 
         .container {
@@ -41,6 +134,8 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 40px rgba(64, 176, 255, 0.08);
         }
 
         .header h1 {
@@ -72,6 +167,42 @@
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
+            backdrop-filter: blur(4px);
+        }
+
+        .game-card.featured {
+            border-color: rgba(64, 176, 255, 0.5);
+            box-shadow: 0 0 25px rgba(64, 176, 255, 0.15);
+        }
+
+        .game-card.featured h3 {
+            color: #40b0ff;
+            text-shadow: 0 0 12px rgba(64, 176, 255, 0.6);
+        }
+
+        .game-card.featured .feature-tag {
+            background: rgba(64, 176, 255, 0.15);
+            color: #7df9ff;
+            border-color: rgba(64, 176, 255, 0.4);
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #40b0ff, #0066ff);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-left: 8px;
+            vertical-align: middle;
+            box-shadow: 0 0 10px rgba(64, 176, 255, 0.6);
+        }
+
+        .game-card.featured .download-btn {
+            background: linear-gradient(45deg, #40b0ff, #0066ff);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(64, 176, 255, 0.4);
         }
 
         .game-card:hover {
@@ -197,6 +328,12 @@
     </style>
 </head>
 <body>
+    <div class="space-bg"></div>
+    <div class="stars-layer stars-small"></div>
+    <div class="stars-layer stars-big"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
     <div class="container">
         <div class="header">
             <h1>🚀 Ultimate Meteor APK Koleksiyonu</h1>
@@ -204,14 +341,29 @@
         </div>
 
         <div class="games-grid">
-            <div class="game-card">
-                <h3><span class="icon">🛸</span> Ultimate Meteor 4</h3>
-                <div class="description">Serinin en yeni ve devrimsel oyunu: Nuclear War! Gelişmiş Kozmik Market, Ultimate Pass ayrıcalıkları, Elmas sistemi, Agent ve Buddy mekanikleri ile meteora karşı nükleer bir savaşa girin.</div>
+            <div class="game-card featured">
+                <h3><span class="icon">🛸</span> Ultimate Meteor Apocalypse 3 <span class="new-badge">YENİ</span></h3>
+                <div class="description">Serinin en kapsamlı oyunu! Agent ve Agent 2.0 sistemleri, Buddy yardımcı gemisi, 6 farklı evren (Standart, Dünya, Kıyamet, Volkan, Kara Delik, Buz), gemi güçlendirmeleri ve Ultimate Pass ile galaksiler arası hayatta kalma mücadelesine hazır olun.</div>
                 <div class="features">
-                    <span class="feature-tag">Nuclear War</span>
-                    <span class="feature-tag">Kozmik Market</span>
-                    <span class="feature-tag">Elmas & Ultimate Pass</span>
+                    <span class="feature-tag">Agent & Agent 2.0</span>
+                    <span class="feature-tag">Buddy Sistemi</span>
+                    <span class="feature-tag">6 Evren</span>
+                    <span class="feature-tag">Gemi Yükseltmeleri</span>
+                    <span class="feature-tag">Ultimate Pass</span>
+                    <span class="feature-tag">Elmas & Altın</span>
+                </div>
+                <a href="https://drive.google.com/file/d/1qvE4VC_MkiBVOBPgBYtTRrMDMr_63Esq/view?usp=drivesdk" class="download-btn">📥 Drive'dan İndir</a>
+            </div>
+
+            <div class="game-card featured">
+                <h3><span class="icon">☄️</span> Ultimate Meteor 4</h3>
+                <div class="description">Bu sürümde, Ultimate Pass'deki ödülleri, gemi güçlendirmesi avantajlarını say say bitmez, çeşitli meteor skinleri, 6 evren ve Ultimate Pass ile 2 kat altın, ekstra can ve anında Agent & Buddy erişimi sunuyor.</div>
+                <div class="features">
+                    <span class="feature-tag">8+ Gemi Skini</span>
+                    <span class="feature-tag">Meteor Skinleri</span>
+                    <span class="feature-tag">6 Evren</span>
                     <span class="feature-tag">Agent & Buddy</span>
+                    <span class="feature-tag">Ultimate Pass</span>
                 </div>
                 <a href="https://drive.google.com/file/d/1uwRkG9KApwFEMyi8kyOtqGaeoZqoGUTz/view?usp=drivesdk" class="download-btn">📥 Drive'dan İndir</a>
             </div>
@@ -291,13 +443,13 @@
         </div>
 
         <div class="instructions">
-            <h4>📋 APK Kurulum Talimatları:</h4>
+            <h4>📋 Kurulum Öncesi Güvenlik Kontrolü:</h4>
             <ol style="margin-left: 20px; line-height: 1.8;">
-                <li>İndirme butonuna tıkla (Google Drive açılacak).</li>
-                <li>Mavi renkli "İndir veya Download" butonuna tıkla.</li>
-                <li>"Bilinmeyen kaynaklara izin ver" seçeneğini aktif edin. (İsterseniz telefon ayarlarından sonra tekrar kapatabilirsiniz.)</li>
-                <li>İndirilen APK'yı kurun ve oyuna başlayın!
-                NOT: Google Drive uygulamamıza 'virüs' uyarısı verebilir. Uygulamamız kesinlikle güvenlidir ve virüs içermemektedir. Yalnızca Android içindir. Apple cihazlarda indirilemez</li>
+                <li>İndirme butonuna tıklayın (Google Drive açılacaktır).</li>
+                <li>Dosyayı indirmeden önce, mümkünse <a href="https://www.virustotal.com/" style="color:#7df9ff;">virustotal.com</a> gibi bağımsız bir tarama servisinde kontrol etmenizi öneririz.</li>
+                <li>Yalnızca Android cihazlarda çalışır; Apple cihazlarda kurulamaz.</li>
+                <li>Kurulum için telefonunuzda "Bilinmeyen kaynaklara izin ver" ayarını geçici olarak açmanız gerekir. Kurulumdan hemen sonra bu ayarı tekrar kapatmanızı öneririz.</li>
+                <li>Sisteminiz bir güvenlik uyarısı gösterirse bunu görmezden gelmeyin — uyarıyı dikkatlice okuyun ve emin olmadığınız durumda kurulumu iptal edin.</li>
             </ol>
         </div>
 
